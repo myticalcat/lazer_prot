@@ -31,8 +31,9 @@ func fire(obj: ColorRect):
 	while obj.color.a > 0:
 		obj.color.a -= fade_step
 		if obj.color.a < 0:
-			obj.color.a = 0  # Ensure alpha doesn't go below 0
+			obj.color.a = 0
 		await get_tree().create_timer(current_interval).timeout
+	
 
 
 

@@ -18,6 +18,11 @@ func _process(delta):
 			add_sibling(lazer)
 			return
 		update_lazer_scale()
+	elif is_button_pressed and not is_mouse_in:
+		is_lazer_crt = false
+		if lazer:
+			lazer.queue_free()
+			lazer = null
 	elif is_lazer_crt:
 		is_lazer_crt = false
 		fire_lazer()
