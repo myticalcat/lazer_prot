@@ -1,27 +1,25 @@
 extends Node2D
 
-var enemy_list : Array[PackedScene] = [
+var enemy_list: Array[PackedScene] = [
 	preload("res://Scene/Prefab/enemy_fish.tscn"),
 ]
 
-var spawn_timer : float = 2.0  # Adjust the time between spawns
-var spawn_timer_max : float = 5  # Maximum time between spawns
-var spawn_area : Rect2 = Rect2(Vector2(0, 0), Vector2(800, 600))  # Adjust the spawn area
-var chance : float = 0.2
-func _process(delta):
-	spawn_timer -= delta
+var chance: float = 0.2  # The chance to spawn an enemy each time the Timer runs out
 
-	if spawn_timer <= 0.0 and randf() < chance:
-		spawn_enemy()
-		spawn_timer = randf() * spawn_timer_max
+func _ready():
+	randomize()
 
-
-func spawn_enemy():
+func spawn_enemy() -> void:
 	if enemy_list.size() == 0:
 		return
-
 	var random_index = randi() % enemy_list.size()
 	var enemy_scene = enemy_list[random_index]
 	var enemy_instance = enemy_scene.instantiate()
 	add_child(enemy_instance)
 
+
+func _on_spawn_timer_timeout():
+	var number = randf()
+	print(number)
+	if number < chance:
+		spawn_enemy()

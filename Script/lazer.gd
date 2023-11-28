@@ -1,12 +1,13 @@
 extends Node2D
 @export var lazer_rect: ColorRect
 
-var lazer_duration = 1
+var lazer_duration = 10
 var damage  = 5
 func start_lazering():
 	print('imma firin my lazeeeeer')
 	await flicker(lazer_rect, 0.1, lazer_duration)
 	await fire(lazer_rect)
+	print(self.scale.y)
 	queue_free()
 
 func flicker(obj: ColorRect, initial_interval: float, duration: float, decay_factor: float = 0.9):
@@ -35,7 +36,6 @@ func fire(obj: ColorRect):
 		if obj.color.a < 0:
 			obj.color.a = 0
 		await get_tree().create_timer(current_interval).timeout
-	
 
-
-
+func get_damage() -> float:
+	return damage * 100 / scale.y

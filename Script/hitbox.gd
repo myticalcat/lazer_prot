@@ -10,6 +10,7 @@ func _ready():
 	connect("area_entered", _on_area_entered)
 	
 func _on_area_entered(hitbox : Hitbox):
+	print("endered")
 	if hitbox == null:
 		return
 		

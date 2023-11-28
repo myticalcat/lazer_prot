@@ -27,6 +27,11 @@ func _process(delta):
 
 func check_to_fire(mouse_down: bool):
 	if cooldown_timer > 0.0:
+		if mouse_down:
+			var damage_number = preload("res://Scene/Prefab/floating_number.tscn").instantiate()
+			add_sibling(damage_number)
+			damage_number.global_position = get_global_mouse_position() + Vector2(randi_range(-10, 10), randi_range(-10, 10))
+			damage_number.start("cooling down!")
 		return
 	if not mouse_down:
 		if is_lazer_crt:
@@ -40,7 +45,7 @@ func check_to_fire(mouse_down: bool):
 			is_lazer_crt = true
 			start_pos = get_global_mouse_position() - get_parent().position
 			lazer = lazer_prefab.instantiate()
-			lazer.lazer_duration = 0.1
+			lazer.lazer_duration = 1
 			lazer.position = start_pos
 			add_sibling(lazer)
 		elif is_lazer_crt:

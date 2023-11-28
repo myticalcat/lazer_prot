@@ -1,12 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://doxvq1ih6gpjr"]
+[gd_scene load_steps=3 format=3 uid="uid://doxvq1ih6gpjr"]
 
 [ext_resource type="Script" path="res://Script/lazer.gd" id="1_lwwr8"]
-[ext_resource type="Script" path="res://Script/hitbox.gd" id="2_kjn83"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_otd6k"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_74v7f"]
 size = Vector2(1, 1)
 
-[node name="lazer" type="Node2D" node_paths=PackedStringArray("lazer_rect")]
+[node name="lazer" type="Node2D" node_paths=PackedStringArray("lazer_rect") groups=["Lazer"]]
 script = ExtResource("1_lwwr8")
 lazer_rect = NodePath("ColorRect")
 
@@ -15,9 +14,8 @@ offset_right = 1.0
 offset_bottom = 1.0
 color = Color(0, 1, 1, 1)
 
-[node name="Hitbox" type="Area2D" parent="ColorRect"]
-script = ExtResource("2_kjn83")
+[node name="Area2D" type="Area2D" parent="ColorRect" groups=["Lazer"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect/Area2D"]
 position = Vector2(0.5, 0.5)
-shape = SubResource("RectangleShape2D_otd6k")
+shape = SubResource("RectangleShape2D_74v7f")
