@@ -5,7 +5,7 @@ extends Node2D
 
 func start_lazering():
 	print('imma firin my lazeeeeer')
-	await flicker(lazer_rect, 0.1, 2)
+	await flicker(lazer_rect, 0.1, 1)
 	await fire(lazer_rect)
 	queue_free()
 
@@ -16,7 +16,7 @@ func flicker(obj: ColorRect, initial_interval: float, duration: float, decay_fac
 	while Time.get_ticks_msec() < end_time:
 		obj.visible = !obj.visible
 		await get_tree().create_timer(current_interval).timeout
-
+		
 		current_interval *= decay_factor
 		if current_interval < 0.01:
 			current_interval = 0.01
