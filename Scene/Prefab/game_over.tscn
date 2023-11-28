@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://csyguqg16bhsc"]
+
+[ext_resource type="Script" path="res://Scene/Prefab/game_over.gd" id="1_dh4j5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_35sxq"]
+font_size = 60
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_dh4j5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 81.0
+offset_right = 811.0
+offset_bottom = 178.0
+text = "Game Over :'("
+label_settings = SubResource("LabelSettings_35sxq")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 473.0
+offset_top = 284.0
+offset_right = 679.0
+offset_bottom = 400.0
+text = "Main menu"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

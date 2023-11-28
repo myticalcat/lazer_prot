@@ -1,13 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://cdxy88d14esfd"]
+[gd_scene load_steps=3 format=3 uid="uid://cdxy88d14esfd"]
 
 [ext_resource type="Script" path="res://Scene/Prefab/floating_number.gd" id="1_1o7pj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_77fer"]
+font_size = 26
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="floating_number" type="Node2D"]
 script = ExtResource("1_1o7pj")
 
 [node name="Label" type="Label" parent="."]
 modulate = Color(1, 0, 0, 1)
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 73.0
+offset_bottom = 46.0
 text = "text"
+label_settings = SubResource("LabelSettings_77fer")
 horizontal_alignment = 1

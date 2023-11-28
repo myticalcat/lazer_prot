@@ -3,9 +3,9 @@ extends Node2D
 var fade_out_duration = 1.0
 var move_distance = Vector2(0, -50)
 
-func start(text : String):
+func start(text : String, font_size : int = 24):
 	$Label.text = str(text)
-	$Label.add_theme_font_size_override("font_size", 24)
+	$Label.add_theme_font_size_override("font_size", font_size)
 	animate()
 
 func animate():

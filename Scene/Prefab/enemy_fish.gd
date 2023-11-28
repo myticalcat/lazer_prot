@@ -4,7 +4,7 @@ class_name  FishEnemy
 
 @export var hp : float = 10
 @export var speed : float = 100
-@export var atk : int = 1
+@export var atk : int = 20
 	
 
 func _process(delta):

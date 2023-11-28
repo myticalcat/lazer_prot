@@ -38,4 +38,4 @@ func fire(obj: ColorRect):
 		await get_tree().create_timer(current_interval).timeout
 
 func get_damage() -> float:
-	return damage * 100 / scale.y
+	return damage * 50 / scale.y

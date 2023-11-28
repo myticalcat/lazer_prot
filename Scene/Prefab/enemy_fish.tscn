@@ -10,7 +10,7 @@ height = 126.0
 [node name="enemy fish" type="Node2D"]
 script = ExtResource("1_uhnju")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Enemy"]]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_gnont")
 

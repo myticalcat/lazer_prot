@@ -9,7 +9,14 @@ var cooldown_duration = 0.1
 var cooldown_timer = 0.0
 var lazer : Node2D = null
 var is_cooling_down = false
+var hp = 100
 @export var cooldown_bar : CooldownProgress
+@export var HP_bar : HPBar
+signal dead
+
+
+func _ready():
+	HP_bar.update(hp)
 
 func _process(delta):
 	if(lazer == null):
@@ -31,7 +38,7 @@ func check_to_fire(mouse_down: bool):
 			var damage_number = preload("res://Scene/Prefab/floating_number.tscn").instantiate()
 			add_sibling(damage_number)
 			damage_number.global_position = get_global_mouse_position() + Vector2(randi_range(-10, 10), randi_range(-10, 10))
-			damage_number.start("cooling down!")
+			damage_number.start("cooling down!", 5)
 		return
 	if not mouse_down:
 		if is_lazer_crt:
@@ -80,3 +87,15 @@ func _on_area_2d_mouse_entered():
 
 func _on_area_2d_mouse_exited():
 	is_mouse_in = false
+
+func damaged(damage : float):
+	hp -= damage
+	if(hp <= 0):
+		hp = 0
+		print('dead1')
+		emit_signal('dead')
+	HP_bar.update(hp)
+
+func _on_danger_zone_area_entered(area):
+	damaged(area.owner.atk)
+	area.owner.queue_free()

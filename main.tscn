@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://1i1twiq0wqi8"]
+[gd_scene load_steps=5 format=3 uid="uid://1i1twiq0wqi8"]
 
 [ext_resource type="PackedScene" uid="uid://dh1npe0bjpo8o" path="res://Scene/Prefab/lazer_renderer.tscn" id="1_gw834"]
+[ext_resource type="Script" path="res://Script/main_loader.gd" id="1_ro4us"]
 [ext_resource type="PackedScene" uid="uid://duwsred5mg4tt" path="res://Scene/Prefab/enemy_spawner.tscn" id="2_cadmh"]
+[ext_resource type="PackedScene" uid="uid://csyguqg16bhsc" path="res://Scene/Prefab/game_over.tscn" id="3_hmgdh"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_ro4us")
 
 [node name="LazerRenderer" parent="." instance=ExtResource("1_gw834")]
 
@@ -21,3 +24,9 @@ position = Vector2(1198, 464)
 
 [node name="enemy_spawner5" parent="." instance=ExtResource("2_cadmh")]
 position = Vector2(1201, 586)
+
+[node name="GameOver" parent="." instance=ExtResource("3_hmgdh")]
+visible = false
+
+[connection signal="dead_signal" from="LazerRenderer" to="." method="_on_lazer_renderer_dead_signal"]
+[connection signal="restart_game" from="GameOver" to="." method="_on_game_over_restart_game"]

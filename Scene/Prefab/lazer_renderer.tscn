@@ -1,20 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh1npe0bjpo8o"]
+[gd_scene load_steps=7 format=3 uid="uid://dh1npe0bjpo8o"]
 
+[ext_resource type="Script" path="res://Scene/Prefab/lazer_renderer.gd" id="1_3ecwu"]
 [ext_resource type="Script" path="res://Script/lazer_area.gd" id="1_u5oll"]
 [ext_resource type="Script" path="res://Script/cooldown_bar.gd" id="2_c77uc"]
+[ext_resource type="Script" path="res://Scene/Prefab/HP Bar.gd" id="3_jyf10"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqvnp"]
 size = Vector2(272, 673)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l21h8"]
+size = Vector2(105, 670)
+
 [node name="LazerRenderer" type="Node2D"]
+script = ExtResource("1_3ecwu")
 
 [node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" node_paths=PackedStringArray("cooldown_bar") groups=["dropable"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" node_paths=PackedStringArray("cooldown_bar", "HP_bar") groups=["dropable"]]
 position = Vector2(318, 326.5)
 shape = SubResource("RectangleShape2D_yqvnp")
 script = ExtResource("1_u5oll")
 cooldown_bar = NodePath("../../Control/ProgressBar")
+HP_bar = NodePath("../../Control/HP Bar")
 
 [node name="ColorRect" type="ColorRect" parent="Area2D/CollisionShape2D"]
 offset_left = -130.0
@@ -35,9 +42,9 @@ offset_bottom = 647.0
 modulate = Color(0.980392, 0.152941, 0, 1)
 layout_mode = 0
 offset_left = 5.0
-offset_top = 642.0
-offset_right = 635.0
-offset_bottom = 673.0
+offset_top = 297.0
+offset_right = 290.0
+offset_bottom = 328.0
 rotation = 4.71239
 show_percentage = false
 script = ExtResource("2_c77uc")
@@ -45,13 +52,42 @@ text_label = NodePath("Label")
 
 [node name="Label" type="Label" parent="Control/ProgressBar"]
 layout_mode = 0
-offset_left = 298.0
-offset_top = 2.99973
-offset_right = 340.0
-offset_bottom = 28.9997
+offset_left = 7.99999
+offset_top = 1.99999
+offset_right = 50.0
+offset_bottom = 28.0
 text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HP Bar" type="ProgressBar" parent="Control"]
+modulate = Color(0.407843, 1, 0, 1)
+layout_mode = 0
+offset_left = 5.0
+offset_top = 632.0
+offset_right = 295.0
+offset_bottom = 663.0
+rotation = 4.71239
+show_percentage = false
+script = ExtResource("3_jyf10")
+
+[node name="Label" type="Label" parent="Control/HP Bar"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 29.0
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DangerZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DangerZone"]
+position = Vector2(112, 325)
+shape = SubResource("RectangleShape2D_l21h8")
+
 [connection signal="mouse_entered" from="Area2D" to="Area2D/CollisionShape2D" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="Area2D/CollisionShape2D" method="_on_area_2d_mouse_exited"]
+[connection signal="dead" from="Area2D/CollisionShape2D" to="." method="_on_collision_shape_2d_dead"]
+[connection signal="area_entered" from="DangerZone" to="Area2D/CollisionShape2D" method="_on_danger_zone_area_entered"]
