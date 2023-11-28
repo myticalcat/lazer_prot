@@ -5,7 +5,7 @@ var is_lazer_crt = false
 var start_pos = Vector2()
 var end_pos = Vector2()
 var lazer_prefab = preload("res://Scene/Prefab/lazer.tscn")
-var cooldown_duration = 1
+var cooldown_duration = 0.1
 var cooldown_timer = 0.0
 var lazer : Node2D = null
 var is_cooling_down = false
@@ -40,6 +40,7 @@ func check_to_fire(mouse_down: bool):
 			is_lazer_crt = true
 			start_pos = get_global_mouse_position() - get_parent().position
 			lazer = lazer_prefab.instantiate()
+			lazer.lazer_duration = 0.1
 			lazer.position = start_pos
 			add_sibling(lazer)
 		elif is_lazer_crt:

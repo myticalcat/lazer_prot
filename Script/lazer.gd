@@ -1,11 +1,11 @@
 extends Node2D
 @export var lazer_rect: ColorRect
 
-
-
+var lazer_duration = 1
+var damage  = 5
 func start_lazering():
 	print('imma firin my lazeeeeer')
-	await flicker(lazer_rect, 0.1, 1)
+	await flicker(lazer_rect, 0.1, lazer_duration)
 	await fire(lazer_rect)
 	queue_free()
 
