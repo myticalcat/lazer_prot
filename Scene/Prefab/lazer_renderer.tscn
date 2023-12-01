@@ -1,9 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dh1npe0bjpo8o"]
+[gd_scene load_steps=17 format=3 uid="uid://dh1npe0bjpo8o"]
 
 [ext_resource type="Script" path="res://Scene/Prefab/lazer_renderer.gd" id="1_3ecwu"]
 [ext_resource type="Script" path="res://Script/lazer_area.gd" id="1_u5oll"]
 [ext_resource type="Script" path="res://Script/cooldown_bar.gd" id="2_c77uc"]
 [ext_resource type="Script" path="res://Scene/Prefab/HP Bar.gd" id="3_jyf10"]
+[ext_resource type="Texture2D" uid="uid://jkehfhnu56v2" path="res://Asset/area.png" id="3_suh8o"]
+[ext_resource type="Texture2D" uid="uid://d3a0iuek0oixi" path="res://Asset/lele_all.png" id="5_pyy16"]
+[ext_resource type="Texture2D" uid="uid://c5cupa6vk1705" path="res://Asset/progress bar green.png" id="7_ij3xs"]
+[ext_resource type="Texture2D" uid="uid://b3bt6r0wjbnpi" path="res://Asset/progress bar red.png" id="8_61lxe"]
+[ext_resource type="PackedScene" uid="uid://dy0iv4p1vppka" path="res://Scene/Prefab/shop.tscn" id="9_bm63d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqvnp"]
 size = Vector2(272, 673)
@@ -11,19 +16,98 @@ size = Vector2(272, 673)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l21h8"]
 size = Vector2(105, 670)
 
+[sub_resource type="Animation" id="Animation_dswxt"]
+resource_name = "idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_43ir3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_av3ai"]
+resource_name = "cast"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_uq14l"]
+resource_name = "hold"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r0xhd"]
+_data = {
+"RESET": SubResource("Animation_43ir3"),
+"cast": SubResource("Animation_av3ai"),
+"hold": SubResource("Animation_uq14l"),
+"idle": SubResource("Animation_dswxt")
+}
+
 [node name="LazerRenderer" type="Node2D"]
 script = ExtResource("1_3ecwu")
 
 [node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" node_paths=PackedStringArray("cooldown_bar", "HP_bar") groups=["dropable"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" node_paths=PackedStringArray("cooldown_bar", "HP_bar", "animator") groups=["dropable"]]
 position = Vector2(318, 326.5)
 shape = SubResource("RectangleShape2D_yqvnp")
 script = ExtResource("1_u5oll")
 cooldown_bar = NodePath("../../Control/ProgressBar")
 HP_bar = NodePath("../../Control/HP Bar")
+animator = NodePath("../../Sprite2D/AnimationPlayer")
+
+[node name="Area" type="Sprite2D" parent="Area2D/CollisionShape2D"]
+position = Vector2(-2.00002, 3)
+scale = Vector2(0.428571, 0.464799)
+texture = ExtResource("3_suh8o")
 
 [node name="ColorRect" type="ColorRect" parent="Area2D/CollisionShape2D"]
+visible = false
 offset_left = -130.0
 offset_top = -317.0
 offset_right = 129.0
@@ -64,9 +148,9 @@ vertical_alignment = 1
 modulate = Color(0.407843, 1, 0, 1)
 layout_mode = 0
 offset_left = 5.0
-offset_top = 632.0
+offset_top = 617.0
 offset_right = 295.0
-offset_bottom = 663.0
+offset_bottom = 648.0
 rotation = 4.71239
 show_percentage = false
 script = ExtResource("3_jyf10")
@@ -86,6 +170,32 @@ vertical_alignment = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DangerZone"]
 position = Vector2(112, 325)
 shape = SubResource("RectangleShape2D_l21h8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(115, 280)
+scale = Vector2(0.757813, 0.738281)
+texture = ExtResource("5_pyy16")
+hframes = 6
+vframes = 2
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+speed_scale = 5.0
+libraries = {
+"": SubResource("AnimationLibrary_r0xhd")
+}
+
+[node name="ProgressBarGreen" type="Sprite2D" parent="."]
+position = Vector2(29, 473)
+scale = Vector2(0.254386, 0.277067)
+texture = ExtResource("7_ij3xs")
+
+[node name="ProgressBarRed" type="Sprite2D" parent="."]
+position = Vector2(29.625, 161.5)
+scale = Vector2(0.28629, 0.326944)
+texture = ExtResource("8_61lxe")
+
+[node name="Shop" parent="." instance=ExtResource("9_bm63d")]
 
 [connection signal="mouse_entered" from="Area2D" to="Area2D/CollisionShape2D" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="Area2D/CollisionShape2D" method="_on_area_2d_mouse_exited"]

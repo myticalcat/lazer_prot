@@ -1,29 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://1i1twiq0wqi8"]
+[gd_scene load_steps=6 format=3 uid="uid://1i1twiq0wqi8"]
 
 [ext_resource type="PackedScene" uid="uid://dh1npe0bjpo8o" path="res://Scene/Prefab/lazer_renderer.tscn" id="1_gw834"]
 [ext_resource type="Script" path="res://Script/main_loader.gd" id="1_ro4us"]
 [ext_resource type="PackedScene" uid="uid://duwsred5mg4tt" path="res://Scene/Prefab/enemy_spawner.tscn" id="2_cadmh"]
+[ext_resource type="Texture2D" uid="uid://bgyjpmij3rkgm" path="res://Asset/CamScanner_11-29-2023_23.21.png" id="2_o3brt"]
 [ext_resource type="PackedScene" uid="uid://csyguqg16bhsc" path="res://Scene/Prefab/game_over.tscn" id="3_hmgdh"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ro4us")
 
+[node name="CamScanner11-29-202323_21" type="Sprite2D" parent="."]
+position = Vector2(577, 370)
+scale = Vector2(0.695625, 0.409603)
+texture = ExtResource("2_o3brt")
+
 [node name="LazerRenderer" parent="." instance=ExtResource("1_gw834")]
 
 [node name="enemy_spawner" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1193, 49)
+position = Vector2(1193, 85)
 
 [node name="enemy_spawner2" parent="." instance=ExtResource("2_cadmh")]
 position = Vector2(1195, 193)
 
 [node name="enemy_spawner3" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1194, 343)
+position = Vector2(1196, 298)
 
 [node name="enemy_spawner4" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1198, 464)
+position = Vector2(1203, 440)
 
 [node name="enemy_spawner5" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1201, 586)
+position = Vector2(1203, 541)
 
 [node name="GameOver" parent="." instance=ExtResource("3_hmgdh")]
 visible = false

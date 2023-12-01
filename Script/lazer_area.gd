@@ -7,18 +7,23 @@ var end_pos = Vector2()
 var lazer_prefab = preload("res://Scene/Prefab/lazer.tscn")
 var cooldown_duration = 0.1
 var cooldown_timer = 0.0
+var lazer_duration = 0.1
 var lazer : Node2D = null
 var is_cooling_down = false
 var hp = 100
 @export var cooldown_bar : CooldownProgress
 @export var HP_bar : HPBar
+@export var animator : AnimationPlayer
 signal dead
-
-
+var play_hold
+var play_cast
 func _ready():
+	animator.play("idle")
 	HP_bar.update(hp)
 
 func _process(delta):
+
+	
 	if(lazer == null):
 		cooldown_timer -= delta
 	if(is_cooling_down):
@@ -31,6 +36,17 @@ func _process(delta):
 
 	if not is_instance_valid(lazer):
 		lazer = null
+		
+	if(lazer != null and play_hold):
+		
+		animator.play("hold")
+	elif(play_cast):
+		animator.play("cast")
+		if(animator.get_current_animation_position() >= 0.99):
+			play_hold = true
+			print("here")
+	else:
+		animator.play("idle")
 
 func check_to_fire(mouse_down: bool):
 	if cooldown_timer > 0.0:
@@ -49,10 +65,11 @@ func check_to_fire(mouse_down: bool):
 
 	if is_mouse_in:
 		if not is_lazer_crt:
+			play_cast = true
 			is_lazer_crt = true
 			start_pos = get_global_mouse_position() - get_parent().position
 			lazer = lazer_prefab.instantiate()
-			lazer.lazer_duration = 1
+			lazer.lazer_duration = lazer_duration
 			lazer.position = start_pos
 			add_sibling(lazer)
 		elif is_lazer_crt:
@@ -74,9 +91,11 @@ func update_lazer_scale():
 
 func fire_lazer():
 	if lazer:
-		lazer.start_lazering()
+		lazer.start_lazering(animator)
 	start_pos = Vector2()
 	end_pos = Vector2()
+	play_cast = false
+	play_hold = false
 
 func start_cooldown():
 	is_cooling_down = true

@@ -3,7 +3,7 @@ extends Node2D
 
 var lazer_duration = 10
 var damage  = 5
-func start_lazering():
+func start_lazering(animator : AnimationPlayer):
 	print('imma firin my lazeeeeer')
 	await flicker(lazer_rect, 0.1, lazer_duration)
 	await fire(lazer_rect)

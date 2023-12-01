@@ -5,7 +5,7 @@ class_name  FishEnemy
 @export var hp : float = 10
 @export var speed : float = 100
 @export var atk : int = 20
-	
+var explosion : PackedScene = preload("res://Scene/Prefab/explosion.tscn")
 
 func _process(delta):
 	self.position.x -= speed * delta
@@ -17,6 +17,10 @@ func damaged(amount: float):
 	hp -= amount
 	show_damage(amount)
 	if (hp <= 0):
+		var ex = explosion.instantiate()
+		ex.emitting = true
+		ex.position = self.position
+		add_sibling(ex)
 		queue_free()
 	
 func show_damage(amount: int):
@@ -31,6 +35,5 @@ func remove():
 
 
 func _on_area_2d_area_entered(area):
-	print('ouch')
 	if area.is_in_group("Lazer"):
 		damaged(area.owner.get_damage())

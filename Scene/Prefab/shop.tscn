@@ -1,0 +1,112 @@
+[gd_scene load_steps=9 format=3 uid="uid://dy0iv4p1vppka"]
+
+[ext_resource type="Texture2D" uid="uid://bls1v6up010da" path="res://Asset/win_ver.png" id="1_slqjd"]
+[ext_resource type="Script" path="res://Scene/Prefab/Shop.gd" id="2_neetl"]
+[ext_resource type="Texture2D" uid="uid://b6bt28xqeyjgy" path="res://Asset/v.png" id="3_l5abf"]
+[ext_resource type="Script" path="res://Scene/Prefab/ButtonOpen.gd" id="4_1yif0"]
+
+[sub_resource type="Animation" id="Animation_sr0ge"]
+resource_name = "open"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(99, -0.25, 0, 0.25, 0, 99, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(883, -0.25, 0, 0.25, 0, 424, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_rffgq"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(99, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(883, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_oo3gf"]
+resource_name = "close"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(99, -0.25, 0, 0.25, 0, 99, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(424, -0.25, 0, 0.25, 0, 883, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eekg6"]
+_data = {
+"RESET": SubResource("Animation_rffgq"),
+"close": SubResource("Animation_oo3gf"),
+"open": SubResource("Animation_sr0ge")
+}
+
+[node name="Shop" type="Sprite2D"]
+position = Vector2(99, 883)
+texture = ExtResource("1_slqjd")
+script = ExtResource("2_neetl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eekg6")
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_left = -35.0
+offset_top = -281.0
+offset_right = 54.0
+offset_bottom = -250.0
+texture_normal = ExtResource("3_l5abf")
+texture_pressed = ExtResource("3_l5abf")
+texture_hover = ExtResource("3_l5abf")
+texture_disabled = ExtResource("3_l5abf")
+texture_focused = ExtResource("3_l5abf")
+script = ExtResource("4_1yif0")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
