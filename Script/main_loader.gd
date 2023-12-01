@@ -79,7 +79,7 @@ func _on_lazer_renderer_max_damage():
 
 func _on_level_timer_timeout():
 	level += 1
-	$LVL.text = "LVL - " + str(level)
+	$LVL.text = "Level - " + str(level)
 	$EnemyTimer.wait_time -= 1
 	if $EnemyTimer.wait_time < 1:
 		$EnemyTimer.wait_time = 1
