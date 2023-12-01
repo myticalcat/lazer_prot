@@ -34,6 +34,7 @@ offset_left = 473.0
 offset_top = 284.0
 offset_right = 679.0
 offset_bottom = 400.0
-text = "Main menu"
+text = "Retry?
+"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
