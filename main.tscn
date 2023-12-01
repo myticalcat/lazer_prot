@@ -1,13 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://1i1twiq0wqi8"]
+[gd_scene load_steps=11 format=3 uid="uid://1i1twiq0wqi8"]
 
 [ext_resource type="PackedScene" uid="uid://dh1npe0bjpo8o" path="res://Scene/Prefab/lazer_renderer.tscn" id="1_gw834"]
 [ext_resource type="Script" path="res://Script/main_loader.gd" id="1_ro4us"]
 [ext_resource type="PackedScene" uid="uid://duwsred5mg4tt" path="res://Scene/Prefab/enemy_spawner.tscn" id="2_cadmh"]
 [ext_resource type="Texture2D" uid="uid://bgyjpmij3rkgm" path="res://Asset/CamScanner_11-29-2023_23.21.png" id="2_o3brt"]
 [ext_resource type="PackedScene" uid="uid://csyguqg16bhsc" path="res://Scene/Prefab/game_over.tscn" id="3_hmgdh"]
+[ext_resource type="PackedScene" uid="uid://dy0iv4p1vppka" path="res://Scene/Prefab/shop.tscn" id="6_53m42"]
+[ext_resource type="FontFile" uid="uid://dxd0j6fh82v3p" path="res://Asset/font/Casuwalt.ttf" id="7_sunwy"]
+[ext_resource type="AudioStream" uid="uid://gahy0p8m4ajh" path="res://Asset/mp3/isopod_wave.mp3" id="8_f82ke"]
+[ext_resource type="AudioStream" uid="uid://dptg8cjog23kd" path="res://Asset/mp3/Sad Trumpet Meme.mp3" id="9_4ieue"]
 
-[node name="Main" type="Node2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_d6nhk"]
+font = ExtResource("7_sunwy")
+font_size = 52
+font_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("lazer_render", "spawners", "lable_score")]
 script = ExtResource("1_ro4us")
+lazer_render = NodePath("LazerRenderer")
+spawners = [NodePath("enemy_spawner5"), NodePath("enemy_spawner4"), NodePath("enemy_spawner3"), NodePath("enemy_spawner2"), NodePath("enemy_spawner")]
+lable_score = NodePath("Label")
 
 [node name="CamScanner11-29-202323_21" type="Sprite2D" parent="."]
 position = Vector2(577, 370)
@@ -17,22 +29,63 @@ texture = ExtResource("2_o3brt")
 [node name="LazerRenderer" parent="." instance=ExtResource("1_gw834")]
 
 [node name="enemy_spawner" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1193, 85)
+position = Vector2(1185, 114)
 
 [node name="enemy_spawner2" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1195, 193)
+position = Vector2(1191, 218)
 
 [node name="enemy_spawner3" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1196, 298)
+position = Vector2(1194, 325)
 
 [node name="enemy_spawner4" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1203, 440)
+position = Vector2(1201, 429)
 
 [node name="enemy_spawner5" parent="." instance=ExtResource("2_cadmh")]
-position = Vector2(1203, 541)
+position = Vector2(1201, 530)
+
+[node name="Shop" parent="." instance=ExtResource("6_53m42")]
+position = Vector2(1041, 883)
 
 [node name="GameOver" parent="." instance=ExtResource("3_hmgdh")]
 visible = false
 
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 471.0
+offset_top = 12.0
+offset_right = 684.0
+offset_bottom = 68.0
+text = "Point : 00"
+label_settings = SubResource("LabelSettings_d6nhk")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_f82ke")
+volume_db = -12.145
+
+[node name="SadTrumpet" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_4ieue")
+
+[node name="LVL" type="Label" parent="."]
+offset_left = 465.0
+offset_top = 586.0
+offset_right = 678.0
+offset_bottom = 642.0
+text = "level - 1"
+label_settings = SubResource("LabelSettings_d6nhk")
+
+[node name="LevelTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
 [connection signal="dead_signal" from="LazerRenderer" to="." method="_on_lazer_renderer_dead_signal"]
+[connection signal="max_cd" from="LazerRenderer" to="." method="_on_lazer_renderer_max_cd"]
+[connection signal="max_damage" from="LazerRenderer" to="." method="_on_lazer_renderer_max_damage"]
+[connection signal="buy_cooldown" from="Shop" to="." method="_on_shop_buy_cooldown"]
+[connection signal="buy_damage" from="Shop" to="." method="_on_shop_buy_damage"]
+[connection signal="buy_health" from="Shop" to="." method="_on_shop_buy_health"]
 [connection signal="restart_game" from="GameOver" to="." method="_on_game_over_restart_game"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="LevelTimer" to="." method="_on_level_timer_timeout"]

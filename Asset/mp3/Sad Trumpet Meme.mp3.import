@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dptg8cjog23kd"
+path="res://.godot/imported/Sad Trumpet Meme.mp3-4f635fb1fd4a4339bd8f1ec4451b5eac.mp3str"
+
+[deps]
+
+source_file="res://Asset/mp3/Sad Trumpet Meme.mp3"
+dest_files=["res://.godot/imported/Sad Trumpet Meme.mp3-4f635fb1fd4a4339bd8f1ec4451b5eac.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

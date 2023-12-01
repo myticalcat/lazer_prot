@@ -7,6 +7,8 @@ class_name  FishEnemy
 @export var atk : int = 20
 var explosion : PackedScene = preload("res://Scene/Prefab/explosion.tscn")
 
+signal killed_fish
+
 func _process(delta):
 	self.position.x -= speed * delta
 
@@ -21,6 +23,7 @@ func damaged(amount: float):
 		ex.emitting = true
 		ex.position = self.position
 		add_sibling(ex)
+		emit_signal("killed_fish")
 		queue_free()
 	
 func show_damage(amount: int):
@@ -31,6 +34,7 @@ func show_damage(amount: int):
 
 	
 func remove():
+
 	queue_free()
 
 

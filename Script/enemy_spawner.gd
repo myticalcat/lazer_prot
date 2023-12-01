@@ -1,5 +1,10 @@
 extends Node2D
 
+
+class_name EnemySpawner
+
+signal enemy_killed
+
 var enemy_list: Array[PackedScene] = [
 	preload("res://Scene/Prefab/enemy_fish.tscn"),
 ]
@@ -17,9 +22,15 @@ func spawn_enemy() -> void:
 	var enemy_instance = enemy_scene.instantiate()
 	add_child(enemy_instance)
 	enemy_instance.position.y += randi_range(-100, 100)
+	
+	enemy_instance.connect("killed_fish", enemy_dead)
 
+func enemy_dead():
+	emit_signal("enemy_killed")
+	$Audio.play()
 
 func _on_spawn_timer_timeout():
 	var number = randf()
+	print(number)
 	if number < chance:
 		spawn_enemy()
