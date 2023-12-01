@@ -42,6 +42,7 @@ func _process(delta):
 		animator.play("idle")
 
 func check_to_fire(mouse_down: bool):
+	print("mouse input", mouse_down)
 	if cooldown_timer > 0.0:
 		if mouse_down:
 			var damage_number = preload("res://Scene/Prefab/floating_number.tscn").instantiate()

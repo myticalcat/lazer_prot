@@ -9,6 +9,9 @@ var explosion : PackedScene = preload("res://Scene/Prefab/explosion.tscn")
 
 signal killed_fish
 
+func _ready():
+	$AnimationPlayer.play("idle_fish")
+
 func _process(delta):
 	self.position.x -= speed * delta
 
